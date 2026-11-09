@@ -1,0 +1,65 @@
+USE DB_T05072C_Joao_Pedro;
+
+CREATE TABLE Locacao_Categoria (
+ID_Categoria INT PRIMARY KEY AUTO_INCREMENT,
+Tipo VARCHAR(30) NOT NULL,
+Descricao VARCHAR(200)
+);
+
+CREATE TABLE Locacao_Veiculos (
+ID_Veiculo INT PRIMARY KEY AUTO_INCREMENT,
+Nome VARCHAR(100) NOT NULL,
+QTD_Disponivel INT NOT NULL,
+Preco DECIMAL (10,2) NOT NULL,
+Cor VARCHAR(50) NOT NULL,
+Status VARCHAR(100) NOT NULL,
+Marca VARCHAR(50) NOT NULL,
+ID_Categoria INT NOT NULL,
+FOREIGN KEY (ID_Categoria) REFERENCES Locacao_Categoria (ID_Categoria)
+);
+
+RENAME TABLE Locacao_Veiculos TO Locadora_Veiculos;
+RENAME TABLE Locacao_Categoria TO Locadora_Categoria;
+
+CREATE TABLE Locadora_Clientes (
+ID_Cliente INT PRIMARY KEY AUTO_INCREMENT,
+Nome VARCHAR(100) NOT NULL,
+CPF CHAR(11) UNIQUE NOT NULL,
+Email VARCHAR(100) NOT NULL,
+Telefone CHAR(11) NOT NULL,
+Endereco VARCHAR(200) NOT NULL,
+DT_Nascimento DATE
+);
+
+CREATE TABLE Locadora_Funcionario (
+ID_Funcionario INT PRIMARY KEY AUTO_INCREMENT,
+Nome VARCHAR(100) NOT NULL,
+CPF CHAR(11) UNIQUE NOT NULL,
+Telefone CHAR(11) NOT NULL,
+Email VARCHAR(100) NOT NULL,
+Endereco VARCHAR(200) NOT NULL,
+Cargo VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Locadora_Locacao (
+ID_Locacao INT PRIMARY KEY AUTO_INCREMENT,
+ValorTotal DECIMAL(10,2) NOT NULL,
+DT_Inicial DATETIME,
+DT_Final DATETIME,
+Status VARCHAR(100) NOT NULL,
+ID_Cliente INT NOT NULL,
+ID_Veiculo INT NOT NULL,
+ID_Funcionario INT NOT NULL,
+FOREIGN KEY (ID_Cliente) REFERENCES Locadora_Clientes (ID_Cliente),
+FOREIGN KEY (ID_Veiculo) REFERENCES Locadora_Veiculos (ID_Veiculo),
+FOREIGN KEY (ID_Funcionario) REFERENCES Locadora_Funcionario (ID_Funcionario)
+);
+
+CREATE TABLE Locadora_Pagamento (
+ID_Pagamento INT PRIMARY KEY AUTO_INCREMENT,
+FormaPagamento VARCHAR(100) NOT NULL,
+DataPagamento DATETIME,
+Valor DECIMAL (10,2) NOT NULL,
+ID_Locacao INT NOT NULL,
+FOREIGN KEY (ID_Locacao) REFERENCES Locadora_Locacao (ID_Locacao)
+);
