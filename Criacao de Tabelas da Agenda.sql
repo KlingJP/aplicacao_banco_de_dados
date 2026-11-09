@@ -1,0 +1,41 @@
+USE DB_T05072C_Joao_Pedro;
+
+CREATE TABLE Agenda_Contatos (
+ID_Contato INT PRIMARY KEY AUTO_INCREMENT,
+Nome VARCHAR(100) NOT NULL,
+Apelido VARCHAR(50) NOT NULL,
+Telefone CHAR(11) NOT NULL,
+Email VARCHAR(100) NOT NULL,
+Endereco VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE Agenda_Mensagens (
+ID_Mensagem INT PRIMARY KEY AUTO_INCREMENT,
+Texto TEXT,
+Data_Hora DATETIME,
+ID_Contato INT NOT NULL,
+FOREIGN KEY (ID_Contato) REFERENCES Agenda_Contatos (ID_Contato)
+);
+
+CREATE TABLE Agenda_Favoritos (
+ID_Favorito INT PRIMARY KEY AUTO_INCREMENT,
+Data_Favoritado DATE,
+ID_Contato INT NOT NULL,
+FOREIGN KEY (ID_Contato) REFERENCES Agenda_Contatos (ID_Contato)
+);
+
+CREATE TABLE Agenda_Ligacoes (
+ID_Ligacao INT PRIMARY KEY AUTO_INCREMENT,
+Numero VARCHAR(50) NOT NULL,
+Data_Hora DATETIME,
+Duracao TIME,
+Tipo VARCHAR(100) NOT NULL,
+ID_Contato INT NOT NULL,
+FOREIGN KEY (ID_Contato) REFERENCES Agenda_Contatos(ID_Contato)
+);
+
+CREATE TABLE Agenda_Grupos (
+ID_Grupo INT PRIMARY KEY AUTO_INCREMENT,
+Nome VARCHAR(100) NOT NULL,
+Descricao TEXT
+);
